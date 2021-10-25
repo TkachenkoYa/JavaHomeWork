@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class CapitalLetter {
     public static void main(String[] args) {
-        System.out.println("Введите строку прописными буквами");
+        System.out.print("Введите строку прописными буквами:");
         Scanner in = new Scanner(System.in);
         String let = in.nextLine();
         String pri=myMetod (let);

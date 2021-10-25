@@ -9,7 +9,7 @@ public class Anagram {
         System.out.println("Введите первую строку");
         String first = in.nextLine();
 
-        System.out.println("Введите первую строку");
+        System.out.println("Введите вторую строку");
         String second = in.nextLine();
 
         if (Anagr(first, second)) {
