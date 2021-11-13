@@ -31,11 +31,11 @@ private String color;
 
     @Override
     public void dressMan() {
-        System.out.println("Штаны мужские, размер "+ size.name()+ size.toString() +", цена "+ coast+" грн., цвет "+color);
+        System.out.println(name+" мужские, размер "+ size.name()+ size.toString() +", цена "+ coast+" грн., цвет "+color);
     }
 
     @Override
     public void dressWomen() {
-        System.out.println("Штаны женские, размер "+ size.name()+ size.toString() +", цена "+ coast+" грн., цвет "+color);
+        System.out.println(name+" женские, размер "+ size.name()+ size.toString() +", цена "+ coast+" грн., цвет "+color);
     }
 }

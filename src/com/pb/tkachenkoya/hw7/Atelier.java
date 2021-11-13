@@ -7,7 +7,7 @@ public class Atelier {
         Skirt skirt = new Skirt("Юбка", Size.XS, (float) 218.3, "красный");
         Tie tie = new Tie("Галстук", Size.M, (float) 78.5, "фуксия");
         Tshirt tshirt1 = new Tshirt("Футболка", Size.S, (float) 154.8, "белый");
-        Tshirt tshirt2 = new Tshirt("Футболка", Size.XXS, (float) 137.3, "черный");
+        Tshirt tshirt2 = new Tshirt("Тенниска", Size.XXS, (float) 137.3, "черный");
 
         Clothes clothes[] = {pants1, pants2, skirt, tie, tshirt1, tshirt2};
         System.out.println("Мужская одежда:");

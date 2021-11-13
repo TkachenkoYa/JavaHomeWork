@@ -31,11 +31,11 @@ public class Tshirt extends Clothes implements ManClothes,WomenClothes{
 
     @Override
     public void dressMan() {
-        System.out.println("Футболка мужская, размер "+ size.name()+ size.toString() +", цена "+ coast+" грн., цвет "+color);
+        System.out.println(name+" мужская, размер "+ size.name()+ size.toString() +", цена "+ coast+" грн., цвет "+color);
     }
 
     @Override
     public void dressWomen() {
-        System.out.println("Футболка женская, размер "+ size.name() + size.toString()+", цена "+ coast+" грн., цвет "+color);
+        System.out.println(name+" женская, размер "+ size.name() + size.toString()+", цена "+ coast+" грн., цвет "+color);
     }
 }
