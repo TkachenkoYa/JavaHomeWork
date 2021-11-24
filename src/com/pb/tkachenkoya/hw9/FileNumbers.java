@@ -3,6 +3,8 @@ package com.pb.tkachenkoya.hw9;
 import java.io.*;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileNumbers {
 
@@ -44,19 +46,26 @@ public class FileNumbers {
                    writer.println();
                 }
             }writer.close();
+
         }catch (FileNotFoundException e) {
-            System.out.println("Файл не найден");
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(FileNumbers.class.getName());
+            logger.log(Level.WARNING, "Не возможно прочитать, файл не найден");
+
             }
         catch (IOException e) {
             e.printStackTrace();
+
             }
     }
 
         public static void main(String[] args) throws IOException {
-        createNumbersFile();
+
+
+            createNumbersFile();
         createOddNumbersFile();
+
     }
+
 
 
 }
