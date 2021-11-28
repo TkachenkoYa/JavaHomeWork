@@ -69,21 +69,16 @@ public int length(){
         int maxInd=0;
         double maxNum=0;
             try {
-                if (number.length == 0) {
+                if (lengthNow() == 0) {
                     System.out.println("Массив пуст");
-                } else {
-                    for (int i = 0;i<number.length;i++) {
-                        for (int j = number.length-1;j > i; j--) {
+                } else if (number!=null){
+                    for (int i = 0;i<lengthNow();i++) {
+                        for (int j = lengthNow()-1;j > i; j--) {
                             if (number[j].doubleValue() >= maxNum) {
                                 maxInd = j;
                                 maxNum=number[j].doubleValue();
-                            } //else if (number[j].equals(null)) {continue;
-                                //return number[maxInd];
-                            } //else continue;
-                    }
-            }} catch (NullPointerException e) {
-                e.getMessage();
-            }
+                            } }} } } catch (NullPointerException e) {
+                e.getMessage();            }
         return number[maxInd];
     }
 
@@ -127,9 +122,9 @@ try {
     numberI.add(0,2);
     numberI.add(1,9);
     numberI.add(2,3);
-    numberI.add(3,5);
+    //numberI.add(3,5);
     System.out.println("     Целочисленный массив: ");
-            System.out.println("Элемент в ячейке 1: "+numberI.getNumber(3));
+            System.out.println("Элемент в ячейке 3: "+numberI.getNumber(3));
             System.out.println("Текущая длина массива: "+numberI.lengthNow());
             System.out.println("Среднее значение элементов: " + String.format("%.2f",numberI.average()));
             System.out.println("Сумма элементов: " + numberI.sum());
