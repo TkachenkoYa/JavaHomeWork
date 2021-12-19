@@ -1,9 +1,14 @@
 package com.pb.tkachenkoya.hw11;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+
 import java.io.*;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
+
 
 /*Создать в пакете hw11 консольное приложение "Телефонная книга". с применением лямбда функции и Stream API.
         Каждый элемент должен иметь:
@@ -76,9 +81,7 @@ public class phonebook {
 
 
         public static void add() throws IOException {
-            File file = Paths.get("phonebook.json").toFile();
-
-            Scanner in = new Scanner(System.in);
+                       Scanner in = new Scanner(System.in);
             System.out.println("Введите фамилию");
             String tsurname = in.nextLine();
             System.out.println("Введите имя");
@@ -99,19 +102,27 @@ public class phonebook {
             String taddress = in.next();
             LocalDate teditDate = LocalDate.now();
             Person person = new Person(tsurname, tname, tpatronymic, tbirthDate, tNumbers, taddress, teditDate);
+            ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+             SimpleModule module = new SimpleModule();
+            module.addSerializer(LocalDate.class, new LocalDateSerializer());
+            module.addDeserializer(LocalDate.class, new LocalDateDeserializer() );
+            mapper.registerModule(module);
             HashMap hm = new HashMap();
             hm.put(tsurname, person);
+
             ObjectInputStream din = new ObjectInputStream(new FileInputStream("phonebook.json"));
             boolean flag = true;
             while (flag) {
                 try {
                     Person allPerson = (Person) din.readObject();
                     hm.put(allPerson.getSurname(), allPerson);
-                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
+din.close();
                     Iterator iter = hm.entrySet().iterator();
+                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
                     while (iter.hasNext()) {
                         Map.Entry entry = (Map.Entry) iter.next();
                         Person value = (Person) entry.getValue();
+
                         out.writeObject(value);
                     }
                     out.close();
@@ -126,6 +137,7 @@ public class phonebook {
 
         public static void del() throws IOException, ClassNotFoundException {
             HashMap hm = new HashMap();
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
             ObjectInputStream din = new ObjectInputStream(new FileInputStream("phonebook.json"));
             Person allPerson = (Person) din.readObject();
             hm.put(allPerson.getSurname(), allPerson);
@@ -138,7 +150,7 @@ public class phonebook {
                 int flag = in.nextInt();
                 if (flag == 1) {
                     hm.remove(result);
-                    ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
+
                     Iterator iter = hm.entrySet().iterator();
                     while (iter.hasNext()) {
                         Map.Entry entry = (Map.Entry) iter.next();
@@ -158,6 +170,7 @@ public class phonebook {
 
         public static void change() throws IOException, ClassNotFoundException {
             HashMap hm = new HashMap();
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
             ObjectInputStream din = new ObjectInputStream(new FileInputStream("phonebook.json"));
             Person allPerson = (Person) din.readObject();
             hm.put(allPerson.getSurname(), allPerson);
@@ -177,6 +190,7 @@ public class phonebook {
 
         public static void printPhonSur() throws IOException, ClassNotFoundException {
             HashMap hm = new HashMap();
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
             ObjectInputStream din = new ObjectInputStream(new FileInputStream("phonebook.json"));
             Person allPerson = (Person) din.readObject();
             hm.put(allPerson.getSurname(), allPerson);
@@ -188,6 +202,7 @@ public class phonebook {
 
         public static void printPhonNum() throws IOException, ClassNotFoundException {
             HashMap hm = new HashMap();
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("phonebook.json"));
             ObjectInputStream din = new ObjectInputStream(new FileInputStream("phonebook.json"));
             Person allPerson = (Person) din.readObject();
             hm.put(allPerson.getSurname(), allPerson);
@@ -203,8 +218,10 @@ public class phonebook {
 
         public static void find() throws IOException, ClassNotFoundException {
             HashMap hm = new HashMap();
-            ObjectInputStream din = new ObjectInputStream(new FileInputStream("phonebook.json"));
-            Person allPerson = (Person) din.readObject();
+            File file = Paths.get("phonebook.json").toFile();
+            FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fileInputStream);
+            Person allPerson = (Person) ois.readObject();
             hm.put(allPerson.getSurname(), allPerson);
             System.out.println("Введите искомую фамилию");
             Scanner in = new Scanner(System.in);
@@ -214,6 +231,7 @@ public class phonebook {
             } else {
                 System.out.println("Такая запись не существует");
             }
+
         }
     }
 }

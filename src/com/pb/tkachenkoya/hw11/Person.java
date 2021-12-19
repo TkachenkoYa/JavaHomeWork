@@ -1,5 +1,8 @@
 package com.pb.tkachenkoya.hw11;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,6 +10,8 @@ import java.util.List;
 
 public class Person implements Serializable {
     private final static long serialVersionUID = 42;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
          private String surname;
         private String name;
         private String patronymic;
@@ -94,4 +99,5 @@ public class Person implements Serializable {
                 "\"editDate\" : \"" + editDate +"\""+ "\n" +
                 "}";
     }
+
 }
