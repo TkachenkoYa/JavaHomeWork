@@ -1,13 +1,10 @@
 package com.hl.hw1_2;
 
 public class Circle {
-    int centerX = 0;
-    int centerY = 0;
+    int centerX;
+    int centerY;
     int R;
 
-    public int getR() {
-        return R;
-    }
 
     public void setR(int r) {
         this.R = r;
@@ -35,7 +32,7 @@ public class Circle {
     }
 
     void belonging(int currentX,int currentY) {
-              if (new Point().distance(currentX,currentY) > R) {
+              if (new Point().distance(currentX,currentY,getCenterX(),getCenterY()) > R) {
                 System.out.println("точка (" + currentX + "; " + currentY + ") находится вне окружности");
             } else {
                 System.out.println("точка (" + currentX + "; " + currentY + ")  находится в окружности");

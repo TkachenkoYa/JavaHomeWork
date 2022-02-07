@@ -33,12 +33,11 @@ public class Point {
             circle.belonging(currentX, currentY);
         }
     }
-    public double distance(int x, int y) {
-        Circle circle=new Circle();
-        double l = Math.sqrt(Math.pow(Math.abs(x - circle.getCenterX()), 2) +
-                Math.pow(Math.abs(y - circle.getCenterY()), 2));
-        //System.out.println(l);
-return l;
+    public double distance(int x, int y, int centerX,int centerY) {
+        //Circle circle=new Circle();
+        double l = Math.sqrt(Math.pow(Math.abs(x - centerX), 2) +
+                Math.pow(Math.abs(y - centerY), 2));
+        return l;
     }
 
 }

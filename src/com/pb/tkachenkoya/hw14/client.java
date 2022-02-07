@@ -6,17 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class client {
-    static class ClientSomthing {
+    public static class ClientSomthing {
         private Socket socket;
-        private BufferedReader in;
-        private BufferedWriter out;
-        private BufferedReader inputUser;
+        private static BufferedReader in;
+        private static BufferedWriter out;
+        private static BufferedReader inputUser;
         private String address;
         private int port;
         private String login;
-        private Date time;
-        private String dtime;
-        private SimpleDateFormat dt1;
+        private static Date time;
+        private static String dtime;
+        private static SimpleDateFormat dt1;
                 public ClientSomthing(String address, int port) {
             this.address = address;
             this.port = port;
@@ -54,7 +54,7 @@ public class client {
                 }
             } catch (IOException ignored) {}
         }
-        private class ReadMsg extends Thread {
+        public class ReadMsg extends Thread {
             @Override
             public void run() {
                 String str;
