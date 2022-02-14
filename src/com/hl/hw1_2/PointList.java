@@ -32,10 +32,10 @@ public class PointList {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PointList)) return false;
-        PointList pointList = (PointList) o;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof PointList)) return false;
+        PointList pointList = (PointList) obj;
         return Objects.equals(points, pointList.points);
     }
 

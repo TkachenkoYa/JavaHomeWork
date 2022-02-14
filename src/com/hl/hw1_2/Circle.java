@@ -19,10 +19,10 @@ public class Circle {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Circle)) return false;
-        Circle circle = (Circle) o;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Circle)) return false;
+        Circle circle = (Circle) obj;
         return Double.compare(circle.R, R) == 0 && Objects.equals(getCenter(), circle.getCenter());
     }
 
