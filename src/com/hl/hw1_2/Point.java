@@ -24,7 +24,5 @@ public class Point {
 
         return (Math.sqrt(Math.pow(Math.abs(point.getX() - circle.getCenter().getX()), 2)
                 + Math.pow(Math.abs(point.getY() - circle.getCenter().getY()), 2)));
-
     }
-
 }

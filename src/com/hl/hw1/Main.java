@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-Human human = new Human();
+        Human human = new Human();
         System.out.println("Введите фамилию ");
         human.setSurname(in.nextLine());
         System.out.println("Введите имя ");
