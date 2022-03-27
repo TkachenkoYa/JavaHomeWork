@@ -2,7 +2,7 @@ package com.hl.hw6;
 
 public class Animal {
     private String name;
-    static int count;
+    private static int count;
 
     public static int getCount() {
         return count;
@@ -15,7 +15,6 @@ public class Animal {
     public Animal(String name) {
         this();
         this.name = name;
-
     }
 
     public void run(Double distance) {

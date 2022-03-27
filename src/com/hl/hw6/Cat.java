@@ -3,15 +3,11 @@ package com.hl.hw6;
 public class Cat extends Animal {
     private String name;
     private static int count;
-
-    public Cat() {
-        count++;
-    }
+    private final Double MAX_DISTANCE = 200.0;
 
     public Cat(String name) {
-        this();
         this.name = name;
-
+        count++;
     }
 
     public static int getCount() {
@@ -19,7 +15,7 @@ public class Cat extends Animal {
     }
     @Override
     public void run(Double distance) {
-        if (distance <= 200 && distance > 0) {
+        if (distance <= MAX_DISTANCE && distance > 0) {
             System.out.println(name + " пробежал " + distance + " м.");
         } else System.out.println(name + " - кот, потому "+distance+" м. не пробежит");
     }
