@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        Phonebook.add(new Record("Petrov", new ArrayList<>(Arrays.asList("987123245", "986543845"))));
-        Phonebook.add(new Record("Petronenko", new ArrayList<>(Arrays.asList("987123254", "986543854"))));
-        Phonebook.add(new Record("Petrov", new ArrayList<>(Arrays.asList("938763845"))));
-        Phonebook.add(new Record("Vasin", new ArrayList<>(Arrays.asList("937523245", "934563845"))));
-        Phonebook.add(new Record("Goroshko", new ArrayList<>(Arrays.asList("687123245", "686543845"))));
+        Phonebook phonebook = new Phonebook();
+        phonebook.add(new Record("Petrov", new ArrayList<>(Arrays.asList("987123245", "986543845"))));
+        phonebook.add(new Record("Petronenko", new ArrayList<>(Arrays.asList("987123254", "986543854"))));
+        phonebook.add(new Record("Petrov", new ArrayList<>(Arrays.asList("938763845"))));
+        phonebook.add(new Record("Vasin", new ArrayList<>(Arrays.asList("937523245", "934563845"))));
+        phonebook.add(new Record("Goroshko", new ArrayList<>(Arrays.asList("687123245", "686543845"))));
 
         boolean finished = false;
         Scanner in = new Scanner(System.in);
@@ -34,19 +34,18 @@ public class Main {
                             break;
                         else tempNumbers.add(number);
                     }
-                    Record tempRecord = new Record(tempName, tempNumbers);
-                    Phonebook.add(tempRecord);
+                    phonebook.add(new Record(tempName, tempNumbers));
                     System.out.println("Запись добавлена");
                     break;
                 case "2":
                     System.out.println("Введите Фамилию для поиска: ");
                     tempName = in.nextLine();
-                    System.out.println(Phonebook.find(tempName));
+                    System.out.println(phonebook.find(tempName));
                     break;
                 case "3":
                     System.out.println("Введите Фамилию для поиска: ");
                     tempName = in.nextLine();
-                    System.out.println(Arrays.asList(Phonebook.findAll(tempName)));
+                    System.out.println(Arrays.asList(phonebook.findAll(tempName)));
                     break;
                 case "0":
                     System.out.println("Пока!");

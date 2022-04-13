@@ -26,54 +26,61 @@ public class Main {
         calcOccurance(strings);
 
         System.out.println(findOccurance(strings));
-
     }
 
     public static int countOccurance(List<String> strings, String str) {
+
         return Collections.frequency(strings, str);
     }
 
     public static List toList(Integer[] numbers) {
-        List<Integer> list = Arrays.asList(numbers);
-        return list;
+
+        return Arrays.asList(numbers);
     }
 
     public static List findUnique(List<Integer> number) {
         List<Integer> unique = new ArrayList<>();
         for (int i = 0; i < number.size(); i++) {
-            if (Collections.frequency(number, number.get(i)) < 2) {
+            if (Collections.frequency(number, number.get(i)) < 2)
                 unique.add(number.get(i));
-            }
         }
         return unique;
     }
 
     public static void calcOccurance(List<String> strings) {
-        Map<String, Integer> counter = new HashMap<>();
-        for (String string : strings) {
-            Integer count = counter.get(string);
-            if (count == null) {
-                count = 0;
+        List<String> stringUnique = findUniqueString(strings);
+        for (int i = 0; i < stringUnique.size(); i++) {
+            int count = 0;
+            for (int j = 0; j < strings.size(); j++) {
+                if (stringUnique.get(i).equals(strings.get(j)))
+                    count++;
             }
-            counter.put(string, ++count);
-        }
-        for (String string : counter.keySet()) {
-            System.out.println(string + ": " + counter.get(string));
+            System.out.println(stringUnique.get(i) + ": " + count);
         }
     }
+
     public static List findOccurance(List<String> strings) {
-        Map<String, Integer> counter = new HashMap<>();
-        for (String string : strings) {
-            Integer count = counter.get(string);
-            if (count == null) {
-                count = 0;
+
+        List<String> findOccurance = new ArrayList<>();
+        List<String> stringUnique = findUniqueString(strings);
+        for (int i = 0; i < stringUnique.size(); i++) {
+            int count = 0;
+            for (int j = 0; j < strings.size(); j++) {
+                if (stringUnique.get(i).equals(strings.get(j)))
+                    count++;
             }
-            counter.put(string, ++count);
-        }
-        List<String> findOccurance=new ArrayList<>();
-        for (String string : counter.keySet()) {
-            findOccurance.add("{name: \""+string + "\", occurrence: " + counter.get(string)+"}");
+            findOccurance.add("{name: \"" + stringUnique.get(i) + "\", occurrence: " + count + "}");
         }
         return findOccurance;
+    }
+
+    public static List findUniqueString(List<String> strings) {
+        List<String> stringUnique = new ArrayList<>();
+        for (int i = 0; i < strings.size(); i++) {
+            if (!stringUnique.contains(strings.get(i)))
+                stringUnique.add(strings.get(i));
+            else break;
+        }
+        return stringUnique;
     }
 }
