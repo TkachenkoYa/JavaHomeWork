@@ -13,6 +13,10 @@ public class Order {
         return name;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     @Override
     public String toString() {
         return name;
