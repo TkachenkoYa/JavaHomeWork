@@ -10,12 +10,12 @@ public class FileLogger {
     private FileWriter fileWriter;
 
     public FileLogger(FileLoggerConfiguration fileLoggerConfiguration) throws IOException {
-        fileWriter = new FileWriter(fileLoggerConfiguration.getLog());
+        fileWriter = new FileWriter(fileLoggerConfiguration.getFile());
     }
 
     public void debug(String message) throws IOException {
-        if (fileLoggerConfiguration.getLevel() == LoggingLevel.DEBUG) {
-            checkFileSize();
+        checkFileSize();
+        if (checkLevel(fileLoggerConfiguration.getLevel())) {
             writer = new BufferedWriter(fileWriter);
             writeToFile(String.format(fileLoggerConfiguration.getFormat(), LocalDateTime.now()
                     .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), LoggingLevel.DEBUG, message));
@@ -24,9 +24,11 @@ public class FileLogger {
 
     public void info(String message) throws IOException {
         checkFileSize();
-        writer = new BufferedWriter(fileWriter);
-        writeToFile(String.format(fileLoggerConfiguration.getFormat(), LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), LoggingLevel.INFO, message));
+        if (checkLevel(fileLoggerConfiguration.getLevel())) {
+            writer = new BufferedWriter(fileWriter);
+            writeToFile(String.format(fileLoggerConfiguration.getFormat(), LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), LoggingLevel.INFO, message));
+        }
     }
 
     public void writeToFile(String message) throws IOException {
@@ -36,13 +38,19 @@ public class FileLogger {
     }
 
     private void checkFileSize() throws IOException {
-        if (fileLoggerConfiguration.getLog().length() >= fileLoggerConfiguration.getMaxSize()) {
+        if (fileLoggerConfiguration.getFile().length() >= fileLoggerConfiguration.getMaxSize()) {
             File newFile = new File(String.format("./Log_%s.txt", LocalDateTime.now()
                     .format(DateTimeFormatter.ofPattern("yyyy_MM_dd HH-mm-ss.SSS"))));
-            fileLoggerConfiguration.setLog(newFile);
+            fileLoggerConfiguration.setFile(newFile);
             fileWriter = new FileWriter(newFile);
             throw new FileMaxSizeReachedException("Over max file size: " + fileLoggerConfiguration.getMaxSize() +
-                    ", current size: " + fileLoggerConfiguration.getLog().length() + ", file path: " + fileLoggerConfiguration.getLog());
+                    ", current size: " + fileLoggerConfiguration.getFile().length() + ", file path: " + fileLoggerConfiguration.getFile());
         }
+    }
+
+    private boolean checkLevel(LoggingLevel loggingLevel) {
+        if (LoggingLevel.DEBUG.equals(fileLoggerConfiguration.getLevel())) {
+            return true;
+        } else return LoggingLevel.INFO.equals(loggingLevel);
     }
 }

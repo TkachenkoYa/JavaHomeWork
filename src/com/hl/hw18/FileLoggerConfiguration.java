@@ -3,17 +3,17 @@ package com.hl.hw18;
 import java.io.File;
 
 public class FileLoggerConfiguration {
-    private File log;
+    private File file;
     private LoggingLevel level;
     private byte maxSize=120;
     private String format="[%s][%s] Message:[%s]";
 
-    public File getLog() {
-        return log;
+    public File getFile() {
+        return file;
     }
 
-    public void setLog(File log) {
-        this.log = log;
+    public void setFile(File file) {
+        this.file = file;
     }
 
     public LoggingLevel getLevel() {
@@ -42,7 +42,7 @@ public class FileLoggerConfiguration {
 
     @Override
     public String toString() {
-        return "FILE: " + log +
+        return "FILE: " + file +
                 "\n" + "LEVEL: " + level +
                 "\n" + "MAX-SIZE: " + maxSize +
                 "\n" + "FORMAT: " + format;
