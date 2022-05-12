@@ -1,43 +1,28 @@
 package com.hl.hw1_2;
 
-import java.util.Scanner;
-
 public class Point {
-    public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        PointList pointList = new PointList();
-        int choice = 0;
-        while (choice != 2) {
-            System.out.println("Введите координаты точки");
-            System.out.print("х=");
-            pointList.addX(in.nextInt());
-            System.out.print("y=");
-            pointList.addY(in.nextInt());
-            System.out.println("Желаете добавить еще? (1-да, 2-нет)");
-            choice = in.nextInt();
-        }
-        System.out.println("Введите координаты центра окружности");
-        Circle circle = new Circle();
-        System.out.print("х=");
-        circle.setCenterX(in.nextInt());
-        System.out.print("y=");
-        circle.setCenterY(in.nextInt());
-        System.out.println("Введите радиус окружности");
-        System.out.print("R=");
-        circle.setR(in.nextInt());
-       // pointList.printPointList();
+    private double x;
+    private double y;
 
-        for (int i = 0; i < pointList.size(); i += 2) {
-            int currentX = pointList.get(i);
-            int currentY = pointList.get(i + 1);
-            circle.belonging(currentX, currentY);
-        }
-    }
-    public double distance(int x, int y, int centerX,int centerY) {
-        //Circle circle=new Circle();
-        double l = Math.sqrt(Math.pow(Math.abs(x - centerX), 2) +
-                Math.pow(Math.abs(y - centerY), 2));
-        return l;
+    public double getX() {
+        return x;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public static double distance(Point point, Circle circle) {
+
+        return (Math.sqrt(Math.pow(Math.abs(point.getX() - circle.getCenter().getX()), 2)
+                + Math.pow(Math.abs(point.getY() - circle.getCenter().getY()), 2)));
+    }
 }
