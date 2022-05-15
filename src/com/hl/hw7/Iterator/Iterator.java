@@ -10,6 +10,7 @@ public class Iterator {
 
     public Iterator(int[][] arr) {
         this.arr = arr;
+        sort(arr);
     }
 
     public void sort(int[][] arr) {
@@ -41,7 +42,7 @@ public class Iterator {
     }
 
     public int next() {
-        sort(arr);
+
         if (arr[row].length == 0) {
             while (arr[row].length == 0) {
                 row++;
