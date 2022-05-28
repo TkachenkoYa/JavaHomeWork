@@ -49,8 +49,8 @@ public class FileLogger {
     }
 
     private boolean checkLevel(LoggingLevel loggingLevel) {
-        if (LoggingLevel.DEBUG.equals(fileLoggerConfiguration.getLevel())) {
+       // if (LoggingLevel.)
             return true;
-        } else return LoggingLevel.INFO.equals(loggingLevel);
+
     }
 }

@@ -7,7 +7,7 @@ public class GetSale {
 
         products.stream()
                 .filter(p -> p.type().equals("Book"))
-                .filter(p -> p.discount() == true)
+                .filter(p -> p.discount())
                 .map(p -> "Product type: "+ p.type()+", sale price "+(p.price()-(p.price()*sale)/100))
                 .forEach(s->System.out.println(s));
     }

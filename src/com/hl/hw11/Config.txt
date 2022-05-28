@@ -1,4 +1,0 @@
-FILE: log_09.05.2022-11:00.txt;
-LEVEL: INFO;
-MAX-SIZE: 16000;
-FORMAT: txt;
