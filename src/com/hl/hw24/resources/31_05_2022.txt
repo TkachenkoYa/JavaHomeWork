@@ -1,0 +1,8 @@
+036	AUD	1	AustralianDollar	21.024
+944	AZN	1	AzerbaijanManat	17.2524
+933	BYN	1	BelarusianRuble	10.6335
+975	BGN	1	BulgarianLev	16.1104
+344	HKD	1	HongKongDollar	3.7271
+208	DKK	1	DanishKrone	4.2348
+840	USD	1	USDollar	29.2549
+978	EUR	1	Euro	31.5031
