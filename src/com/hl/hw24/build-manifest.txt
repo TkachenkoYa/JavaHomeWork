@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Package: com.hl.hw24
+Created-By: Jaroslava
+Main-Class: com.hl.hw24.main.Main

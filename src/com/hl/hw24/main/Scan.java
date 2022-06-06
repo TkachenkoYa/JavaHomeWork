@@ -28,13 +28,14 @@ public class Scan {
     int count = 0;
     double sumCost = 0;
     DateFormat formatter = new SimpleDateFormat("dd_MM_yyyy");
+
     public void scan() throws ParseException, IOException {
         while (!finished) {
             System.out.println("Please, enter the first date of the range in format dd_mm_yyyy");
             String tempDate = in.nextLine();
             if (!tempDate.isEmpty()) {
                 firstDate = formatter.parse(tempDate);
-               start = firstDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                start = firstDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
             }
             System.out.println("Please, enter the second date of the range");
@@ -54,30 +55,29 @@ public class Scan {
                 finished = false;
             }
             for (LocalDate date = start; date.isBefore(end); date = date.plusDays(1)) {
-                String dates=date.format(DateTimeFormatter.ofPattern("dd_MM_yyyy"));
+                String dates = date.format(DateTimeFormatter.ofPattern("dd_MM_yyyy"));
                 if (checkFile(dates)) {
-                    Path file = Paths.get(dates+ ".txt");
-                    if (checkCurrency(file, letterCode)) {
-                        List<Currency> currency = fileRead(file).stream().
-                                filter(o -> o.letterCode.equals(letterCode)).toList();
-                        sumCost += currency.get(0).cost;
+                    Path file = Paths.get("C:\\Users\\Admin\\IdeaProjects\\JavaHomeWork\\src\\com\\hl\\hw24\\resources\\" + dates + ".txt");
+                    List<Currency> currency = fileRead(file);
+                    if (checkCurrency(currency, letterCode)) {
+                        sumCost += (currency.stream().
+                                filter(o -> o.letterCode.equals(letterCode)).toList()).get(0).cost;
                         count++;
                         finished = true;
                     }
-                }
-                System.out.println("data not found for date " + dates);
+                } else System.out.println("data not found for date " + dates);
             }
         }
-        System.out.printf("average exchange rate of %s for the entered dates %s",letterCode, sumCost /count);
+        System.out.printf("average exchange rate of %s for the entered dates %s", letterCode, sumCost / count);
     }
 
     public boolean checkFile(String date) {
-        Path file = Paths.get("C:\\Users\\Admin\\IdeaProjects\\JavaHomeWork\\src\\com\\hl\\hw24\\resources\\" +date+ ".txt");
+        Path file = Paths.get("C:\\Users\\Admin\\IdeaProjects\\JavaHomeWork\\src\\com\\hl\\hw24\\resources\\" + date + ".txt");
         return Files.exists(file);
     }
 
-    public boolean checkCurrency(Path file, String letterCode) throws IOException {
-        return (fileRead(file).contains(letterCode));
+    public boolean checkCurrency(List<Currency> currencies, String letterCode) {
+        return currencies.stream().map(Currency::getLetterCode).filter(letterCode::equals).findFirst().isPresent();
     }
 
     public List<Currency> fileRead(Path file) throws IOException {
