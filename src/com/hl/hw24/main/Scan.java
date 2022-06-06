@@ -72,7 +72,7 @@ public class Scan {
     }
 
     public boolean checkFile(String date) {
-        Path file = Paths.get("src\\com\\hl\\hw24\\resources\\" +date+ ".txt");
+        Path file = Paths.get("C:\\Users\\Admin\\IdeaProjects\\JavaHomeWork\\src\\com\\hl\\hw24\\resources\\" +date+ ".txt");
         return Files.exists(file);
     }
 
