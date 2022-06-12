@@ -42,4 +42,9 @@ public class CheckArrayTest {
         int[] array = {1, 4, 4, 4, 1, 1, 4, 1, 4};
         Assertions.assertTrue(CheckArray.onlyFourAndOne(array));
     }
+    @Test
+    public void shouldReturnFalseWhenFourAndOnePresentButOtherPresentToo() {
+        int[] array = {1, 4, 3, 4, 1, 1, 4, 1, 4};
+        Assertions.assertFalse(CheckArray.onlyFourAndOne(array));
+    }
 }

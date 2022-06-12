@@ -11,23 +11,25 @@ public class CheckArray {
 
         for (int i = 0; i < array.length; i++) {
             if (array[i] == 4)
-               indexLastFour=i;
+                indexLastFour = i;
         }
-        int[] arrayAfterLastFour = new int[array.length - indexLastFour - 1];
-        int index = 0;
-        for (int i = indexLastFour + 1; i < array.length; i++) {
-            arrayAfterLastFour[index] = array[i];
-            index++;
-        }
+        int arrayAfterLastFourLength = array.length - indexLastFour + 1;
+        int[] arrayAfterLastFour = new int[arrayAfterLastFourLength];
+        System.arraycopy(array, indexLastFour + 1, arrayAfterLastFour, 0, arrayAfterLastFourLength);
         return arrayAfterLastFour;
     }
 
     public static boolean onlyFourAndOne(int[] array) {
-        if (Arrays.stream(array).allMatch(x -> x == 1) || Arrays.stream(array).allMatch(x -> x == 4)) {
-            return false;
-        } else {
-            return Arrays.stream(array).allMatch(x -> x == 1 || x == 4);
+        boolean onlyFourAndOne = false;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == 1 || array[i] == 4)
+                onlyFourAndOne = true;
+            else {
+                onlyFourAndOne = false;
+                break;
+            }
         }
+        return onlyFourAndOne;
     }
 }
 
