@@ -1,13 +1,22 @@
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
+@Data
+@RequiredArgsConstructor
 public class Client extends JFrame {
     private static final String SERVER_HOST = "localhost";
-    private static final int SERVER_PORT = 3443;
+    private static final int SERVER_PORT = 8080;
     private Socket clientSocket;
     private Scanner inMessage;
     private PrintWriter outMessage;
@@ -16,7 +25,7 @@ public class Client extends JFrame {
     private final JTextArea jtaTextAreaMessage;
     private String clientName = "";
 
-        public Client() {
+    public Client() {
         try {
             clientSocket = new Socket(SERVER_HOST, SERVER_PORT);
             inMessage = new Scanner(clientSocket.getInputStream());
@@ -25,15 +34,13 @@ public class Client extends JFrame {
             e.printStackTrace();
         }
         setBounds(100, 100, 500, 500);
-        setTitle("Client");
+        setTitle("Chat");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         jtaTextAreaMessage = new JTextArea();
         jtaTextAreaMessage.setEditable(false);
         jtaTextAreaMessage.setLineWrap(true);
         JScrollPane jsp = new JScrollPane(jtaTextAreaMessage);
         add(jsp, BorderLayout.CENTER);
-        JLabel jlNumberOfClients = new JLabel("Количество клиентов в чате: ");
-        add(jlNumberOfClients, BorderLayout.NORTH);
         JPanel bottomPanel = new JPanel(new BorderLayout());
         add(bottomPanel, BorderLayout.SOUTH);
         JButton jbSendMessage = new JButton("Отправить");
@@ -61,24 +68,26 @@ public class Client extends JFrame {
                 jtfName.setText("");
             }
         });
-        new Thread(() -> {
-            try {
-                while (true) {
-                    if (inMessage.hasNext()) {
-                        String inMes = inMessage.nextLine();
-                        String clientsInChat = "Клиентов в чате = ";
-                        if (inMes.contains("-file"))
-                            uploadFile(inMes);
-                        if (inMes.indexOf(clientsInChat) == 0)
-                            jlNumberOfClients.setText(inMes);
-                         else {
-                            jtaTextAreaMessage.append(inMes);
-                            jtaTextAreaMessage.append("\n");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        if (inMessage.hasNext()) {
+                            String inMes = inMessage.nextLine();
+                            // String clientsInChat = "Клиентов в чате = ";
+                            if (inMes.contains("-file")) {
+                                ClientFileUploader clientFileUploader = new ClientFileUploader();
+                                clientFileUploader.uploadFile(inMes);
+                            } else {
+                                jtaTextAreaMessage.append(inMes);
+                                jtaTextAreaMessage.append("\n");
+                            }
                         }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }).start();
         addWindowListener(new WindowAdapter() {
@@ -102,36 +111,10 @@ public class Client extends JFrame {
         setVisible(true);
     }
 
-    private void uploadFile(String inMes) {
-        String[] str = inMes.split(" ");
-        File file = new File(str[2]);
-        if (file.isFile()) {
-            try (DataOutputStream outD = new DataOutputStream(clientSocket.getOutputStream())) {
-
-                outD.writeInt(1);
-                outD.writeUTF(file.getAbsolutePath());
-                outD.writeUTF(file.getName());
-                outD.writeLong(file.length());
-
-                FileInputStream in = new FileInputStream(file);
-                byte[] buffer = new byte[64 * 1024];
-                int count;
-                while ((count = in.read(buffer)) != -1) {
-                    outD.write(buffer, 0, count);
-                }
-                outMessage.println("File's uploading is complete");
-                outD.flush();
-                in.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public void sendMsg() {
         String messageStr = jtfName.getText() + ": " + jtfMessage.getText();
-        outMessage.println(messageStr);
-        outMessage.flush();
-        jtfMessage.setText("");
+        getOutMessage().println(messageStr);
+        getOutMessage().flush();
+        getJtfMessage().setText("");
     }
 }

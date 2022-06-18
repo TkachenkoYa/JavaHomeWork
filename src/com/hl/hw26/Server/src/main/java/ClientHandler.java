@@ -15,11 +15,12 @@ public class ClientHandler implements Runnable {
     private static final int PORT = 3443;
     private Socket clientSocket = null;
     private static int clients_count = 0;
+
     public ClientHandler(Socket socket, Server server) {
         try {
             clients_count++;
-            clientNumber ="Client-"+clients_count;
-            connectTime=LocalDateTime.now();
+            clientNumber = "Client-" + clients_count;
+            connectTime = LocalDateTime.now();
             this.server = server;
             this.clientSocket = socket;
             this.outMessage = new PrintWriter(socket.getOutputStream());
@@ -28,28 +29,20 @@ public class ClientHandler implements Runnable {
             ex.printStackTrace();
         }
     }
+
     @Override
     public void run() {
-        try (InputStream is = clientSocket.getInputStream()){
+        try (InputStream is = clientSocket.getInputStream()) {
             while (true) {
-                server.sendMessageToAllClients(clientNumber +" успешно подключился");
+                server.sendMessageToAllClients(clientNumber + " успешно подключился");
                 break;
             }
-
             while (true) {
                 if (inMessage.hasNext()) {
-
                     String clientMessage = inMessage.nextLine();
                     if (clientMessage.contains("-file")) {
-                        String[] str = clientMessage.split(" ");
-                        File file = new File(str[2]);
-                        byte[] buffer = new byte[64 * 1024];
-                        FileOutputStream fos = new FileOutputStream(
-                                "C:\\Users\\Admin\\"+file.getName());
-                        BufferedOutputStream bos = new BufferedOutputStream(fos);
-                        int bytesRead = is.read(buffer, 0, buffer.length);
-                        bos.write(buffer, 0, bytesRead);
-                        bos.close();
+                        ServerUploader serverUploader = new ServerUploader();
+                        serverUploader.upload();
                     }
                     if (clientMessage.equalsIgnoreCase("-exit"))
                         break;
@@ -58,8 +51,7 @@ public class ClientHandler implements Runnable {
                 }
                 Thread.sleep(100);
             }
-        }
-        catch (InterruptedException ex) {
+        } catch (InterruptedException ex) {
             ex.printStackTrace();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -67,6 +59,7 @@ public class ClientHandler implements Runnable {
             this.close();
         }
     }
+
     public void sendMsg(String msg) {
         try {
             outMessage.println(msg);
@@ -75,6 +68,7 @@ public class ClientHandler implements Runnable {
             ex.printStackTrace();
         }
     }
+
     public void close() {
         server.removeClient(this);
         clients_count--;

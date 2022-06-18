@@ -1,12 +1,14 @@
 package com.hl.hw26.Server.src.main.java;
 
+import lombok.Getter;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
+@Getter
 public class Server {
-    static final int PORT = 3443;
+    static final int PORT = 8080;
     private ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
 
     public Server() {
