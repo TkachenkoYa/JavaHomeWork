@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: com.hl.hw26.Server.src.main.java.Main
+
