@@ -1,6 +1,6 @@
-package ua.ithillel.chat.application;
+package com.hl.hw29.src.main.java.chat.application;
 
-import ua.ithillel.chat.application.server.ChatServer;
+import com.hl.hw29.src.main.java.chat.application.server.ChatServer;
 
 public class Application {
     public static void main(String[] args) {
