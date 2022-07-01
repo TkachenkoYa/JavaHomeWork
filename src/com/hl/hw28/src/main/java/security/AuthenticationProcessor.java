@@ -1,6 +1,5 @@
 package com.hl.hw28.src.main.java.security;
 
-import com.hl.hw28.src.main.java.domain.UserRole;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

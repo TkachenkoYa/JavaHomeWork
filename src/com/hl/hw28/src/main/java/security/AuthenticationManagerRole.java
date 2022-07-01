@@ -10,17 +10,14 @@ import java.util.List;
 public class AuthenticationManagerRole implements AuthenticationManager{
     Logger logger = LogManager.getLogger(AuthenticationManagerRole.class);
     UserDetailsService userDetailsService;
-    List<Authenticator> authenticators = new ArrayList<>() {{
-        new CredentialsAuthenticator(userDetailsService);
-        new AuthenticatorRole(userDetailsService);
-    }};
+    List<Authenticator> authenticators = List.of(
+            new CredentialsAuthenticator(userDetailsService),
+            new AuthenticatorRole(userDetailsService));
 
     @Override
     public void doFilter(Socket socket, AuthenticationRequest request) {
         try {
-            for (Authenticator authenticator : authenticators) {
-                authenticator.attemptAuthenticate(request);
-            }
+            authenticators.stream().forEach(a -> a.attemptAuthenticate(request));
         } catch (AuthenticationException e) {
             logger.debug(request.username() + " is not authenticate");
         }

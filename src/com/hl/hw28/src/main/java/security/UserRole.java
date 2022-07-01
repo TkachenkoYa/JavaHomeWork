@@ -1,4 +1,4 @@
-package com.hl.hw28.src.main.java.domain;
+package com.hl.hw28.src.main.java.security;
 
 public enum UserRole {
     ADMIN(0,"ADMIN"),
